@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('assets', function (Blueprint $table) {
-            $table->id();
-            $table->text('relative_path');
-            $table->text('complete_path');
+        Schema::create('profiles', function (Blueprint $table) { 
+            // table:user_role - Combination of user and role makes a profile for a user.
+            $table->primary(['user_id', 'role_id']);
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('assets');
+        Schema::dropIfExists('profiles');
     }
 };

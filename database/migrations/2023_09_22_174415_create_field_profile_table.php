@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('assets', function (Blueprint $table) {
+        Schema::create('field_profile', function (Blueprint $table) {
             $table->id();
-            $table->text('relative_path');
-            $table->text('complete_path');
+            $table->primary(['field_id', 'profile_id']);
+            $table->text('value');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('assets');
+        Schema::dropIfExists('field_profile');
     }
 };
