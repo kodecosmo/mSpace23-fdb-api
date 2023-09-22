@@ -15,15 +15,16 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name', 100);
-            $table->string('last_name', 100);
+            $table->string('first_name', 150);
+            $table->string('last_name', 150);
             $table->string('email')->unique();
             $table->timestamp('user_verified_at')->nullable();
             $table->string('password');
-            $table->string('whatsapp_number');
+            $table->string('whatsapp_number', 150);
+            $table->text('description', 500);
             $table->foreignIdFor(Gender::class);
             $table->foreignIdFor(Asset::class); // Profile picture
-            $table->boolean('remember_token', 100); // Stored in session storage
+            $table->string('remember_token', 150); // Stored in session storage
             $table->timestamps();
         });
     }

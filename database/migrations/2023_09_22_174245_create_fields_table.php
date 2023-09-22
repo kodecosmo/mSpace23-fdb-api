@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('type')->comment('eg:- int, boolean, string, json');
+            $table->string('name', 150);
+            $table->string('type', 150)->comment('eg:- int, boolean, string, json');
             $table->unsignedBigInteger('length')->comment('specify the character lenght');
             $table->boolean('null')->default(true);
-            $table->string('comment')->comment('comment of the field');
+            $table->string('comment', 150)->comment('comment of the field');
             $table->timestamps();
         });
     }

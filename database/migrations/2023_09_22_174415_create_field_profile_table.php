@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Field;
+use App\Models\Profile;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('field_profile', function (Blueprint $table) {
             $table->id();
-            $table->primary(['field_id', 'profile_id']);
-            $table->text('value');
+            $table->foreignIdFor(Field::class)->unique();
+            $table->foreignIdFor(Profile::class)->unique();
+            $table->text('value')->nullable();
             $table->timestamps();
         });
     }
