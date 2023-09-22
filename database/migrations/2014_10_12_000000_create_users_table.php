@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Asset;
+use App\Models\Gender;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,11 +15,15 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('first_name', 100);
+            $table->string('last_name', 100);
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('user_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+            $table->string('whatsapp_number');
+            $table->foreignIdFor(Gender::class);
+            $table->foreignIdFor(Asset::class); // Profile picture
+            $table->boolean('remember_token', 100); // Stored in session storage
             $table->timestamps();
         });
     }
