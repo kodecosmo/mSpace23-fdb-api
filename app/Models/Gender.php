@@ -10,4 +10,8 @@ class Gender extends Model
     use HasFactory;
 
     protected $table = 'genders';
+
+    protected $fillable = [
+        'name',
+    ];
 }

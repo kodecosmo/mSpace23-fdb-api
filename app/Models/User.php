@@ -15,9 +15,13 @@ class User extends Authenticatable
     protected $table = 'users';
 
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
+        'whatsapp_number',
+        'description',
+        'remember_token',
     ];
 
     protected $hidden = [
@@ -25,7 +29,7 @@ class User extends Authenticatable
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'user_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 }

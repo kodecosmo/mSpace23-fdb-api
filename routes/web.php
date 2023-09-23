@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\FaqController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return "kenura";
+    return view('pages.home');
+})->name('home');
+
+// User login, signup
+Route::controller(UserController::class)->group(function () {
+    Route::post('/login', 'login')->name('user.login');
+    Route::post('/register', 'register')->name('user.register');
+});
+
+// Faq index, paginate
+Route::controller(FaqController::class)->group(function () {
+    Route::get('/faqs', 'index')->name('faqs.index');
+    Route::get('/faqs/paginate', 'paginate')->name('faqs.paginate');
 });
