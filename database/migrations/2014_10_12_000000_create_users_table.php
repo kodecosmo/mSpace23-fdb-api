@@ -24,7 +24,6 @@ return new class extends Migration
             $table->text('description', 500);
             $table->foreignIdFor(Gender::class);
             $table->foreignIdFor(Asset::class); // Profile picture
-            $table->string('remember_token', 150); // Stored in session storage
             $table->timestamps();
         });
     }
