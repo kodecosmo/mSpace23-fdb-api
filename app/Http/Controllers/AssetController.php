@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Asset;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class AssetController extends Controller
@@ -61,7 +62,6 @@ class AssetController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'unexpected error occured',
-                'data' => $th->getMessage(),
             ]);
         }
     }
@@ -78,7 +78,55 @@ class AssetController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'asset' => ['required', 'mimes:jpg,bmp,png,jpeg,gif,svg,pdf,zip,7z,gz', 'max:5120'], // 5MB
+        ]);
+ 
+        if ($validator->fails()) {
+             
+            return response()->json([
+                'success' => false,
+                'message' => 'validation error',
+                'errors' => $validator->errors(),
+            ], 401);
+        }
+        
+        try{
+
+            $asset = $request->file('asset');
+
+            $upload_path = config('assets.upload_path');
+            $view_path = config('assets.view_path');
+            
+            $path = $asset->store($upload_path);
+
+            $asset_file = Asset::find($id);
+            $old_asset_file = $asset_file;
+
+            // location inside storage folder - 'storage/app/public/file.extension'
+            $asset_file->relative_path = $path;
+
+            // location inside public folder - 'public/assets/file.extension'. output can be 'http://localhost/assets/file.extension'
+            $asset_file->complete_path = asset(str_replace($upload_path, $view_path, $path));
+            
+            $asset_file->save();
+
+            if(Storage::exists($old_asset_file->relative_path)){
+                Storage::delete($old_asset_file->relative_path);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'asset updated',
+                'data' => $asset_file,
+            ]);
+        } catch (\Throwable $th) {
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'unexpected error occured',
+            ]);
+        }
     }
 
     /**
@@ -86,6 +134,29 @@ class AssetController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try{
+
+            $asset_file = Asset::find($id);
+
+            $old_asset_file = $asset_file;
+
+            $asset_file->delete();
+
+            if(Storage::exists($old_asset_file->relative_path)){
+                Storage::delete($old_asset_file->relative_path);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'asset deleted',
+                'data' => $asset_file,
+            ]);
+        } catch (\Throwable $th) {
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'unexpected error occured',
+            ]);
+        }
     }
 }

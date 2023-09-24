@@ -38,4 +38,9 @@ Route::controller(FaqController::class)->group(function () {
 Route::get('/contact-details', [ContactController::class, 'index'])->name('contact-details');
 
 // Manage Assets index, store, update, delete
-Route::apiResource('asset', AssetController::class);
+Route::controller(AssetController::class)->group(function () {
+    Route::get('/control-assets', 'index')->name('assets.index');
+    Route::post('/control-assets', 'store')->name('assets.store');
+    Route::put('/control-assets/{id}', 'update')->name('assets.update');
+    Route::delete('/control-assets/{id}', 'destroy')->name('assets.destroy');
+});
