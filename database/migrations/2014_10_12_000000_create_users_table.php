@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamp('user_verified_at')->nullable();
             $table->string('password');
             $table->string('whatsapp_number', 150);
-            $table->text('description', 500);
+            $table->text('description', 500)->nullable();
             $table->foreignIdFor(Gender::class);
             $table->foreignIdFor(Asset::class); // Profile picture
             $table->timestamps();

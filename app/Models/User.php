@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -42,5 +43,15 @@ class User extends Authenticatable
     public function lastToken(): HasMany
     {
         return $this->hasMany(PersonalAccessTokens::class)->latest();
+    }
+
+    public function gender(): BelongsTo
+    {
+        return $this->belongsTo(Gender::class);
+    }
+
+    public function image(): BelongsTo
+    {
+        return $this->belongsTo(Asset::class);
     }
 }

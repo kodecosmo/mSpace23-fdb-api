@@ -21,8 +21,8 @@ Route::get('/', function () {
 
 // User login, signup
 Route::controller(UserController::class)->group(function () {
-    Route::post('/login', 'login')->name('user.login');
-    Route::post('/register', 'register')->name('user.register');
+    Route::post('/login', 'login')->name('login');
+    Route::post('/register', 'register')->name('register');
 });
 
 // Faq index, paginate
