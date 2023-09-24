@@ -22,7 +22,7 @@ class FaqController extends Controller
             
             return response()->json([
                 'success' => false,
-                "message" => "unexpected error occured",
+                'message' => 'unexpected error occured',
             ]);
         }
 
@@ -43,7 +43,7 @@ class FaqController extends Controller
             
             return response()->json([
                 'success' => false,
-                "message" => "unexpected error occured",
+                'message' => 'unexpected error occured',
             ]);
         }
     }

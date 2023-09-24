@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssetController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\UserController;
@@ -33,4 +34,8 @@ Route::controller(FaqController::class)->group(function () {
     Route::get('/faqs/paginate', 'paginate')->name('faqs.paginate');
 });
 
+// Contact Details index
 Route::get('/contact-details', [ContactController::class, 'index'])->name('contact-details');
+
+// Manage Assets index, store, update, delete
+Route::apiResource('asset', AssetController::class);

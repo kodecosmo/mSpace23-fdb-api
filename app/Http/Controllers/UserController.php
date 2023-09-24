@@ -97,34 +97,44 @@ class UserController extends Controller
         // Check the user...
         if($authResult['success'] == false){
 
-            $user = new User;
-            $user->first_name = $first_name;
-            $user->last_name = $last_name;
-            $user->email = $email;
-            $user->password = Hash::make($password);
-            $user->whatsapp_number = $whatsapp_number;
-            $user->description = $description;
-            $user->gender()->associate(Gender::find($gender_id));
-            $user->image()->associate(Asset::find($asset_id));
-            $user->remember_me = $remember_me;
-            $user->save();
+            try {
+                
+                $user = new User;
+                $user->first_name = $first_name;
+                $user->last_name = $last_name;
+                $user->email = $email;
+                $user->password = Hash::make($password);
+                $user->whatsapp_number = $whatsapp_number;
+                $user->description = $description;
+                $user->gender()->associate(Gender::find($gender_id));
+                $user->image()->associate(Asset::find($asset_id));
+                $user->remember_me = $remember_me;
+                $user->save();
 
-            if($remember_me){
+                if($remember_me){
 
-                // token authentification should be checked first...
-                $token = new PersonalAccessTokens;
-                $token->id = Str::uuid();
-                $token->last_used_at = now();
-                $token->save();
+                    // token authentification should be checked first...
+                    $token = new PersonalAccessTokens;
+                    $token->id = Str::uuid();
+                    $token->last_used_at = now();
+                    $token->save();
 
-                $user->lastToken()->associate($token);
+                    $user->lastToken()->associate($token);
+                }
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'user created',
+                    'data' => $user,
+                ]);
+            } catch (\Throwable $th) {
+                
+                return response()->json([
+                    'success' => false,
+                    'message' => 'unexpected error occured',
+                ]);
             }
-
-            return response()->json([
-                'success' => true,
-                'message' => 'user created',
-                'data' => $user,
-            ]);
+                
         }else{
 
             return response()->json([
@@ -197,24 +207,33 @@ class UserController extends Controller
                    
             if (Hash::check($password, $user->first()->password)) {
 
-                if($remember_me){
+                try{
+    
+                    if($remember_me){
 
-                    // token authentification should be checked first...
-                    $token = new PersonalAccessTokens;
-                    $token->id = Str::uuid();
-                    $token->last_used_at = now();
-                    $token->save();
+                        // token authentification should be checked first...
+                        $token = new PersonalAccessTokens;
+                        $token->id = Str::uuid();
+                        $token->last_used_at = now();
+                        $token->save();
 
-                    $user->lastToken()->associate($token);
+                        $user->lastToken()->associate($token);
+                    }
+
+                    return [
+                        'success' => true,
+                        'message' => 'user logged',
+                        'data' => [
+                            $user->first()
+                        ],
+                    ];
+                } catch (\Throwable $th) {
+                    
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'unexpected error occured',
+                    ]);
                 }
-
-                return [
-                    'success' => true,
-                    'message' => 'user logged',
-                    'data' => [
-                        $user->first()
-                    ],
-                ];
 
             }else{
                         
