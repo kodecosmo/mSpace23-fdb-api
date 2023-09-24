@@ -3,18 +3,6 @@
 @section('content')
 
 @include('components.api-link', [
-    'method' => 'get', 
-    'url' => route('faqs.index'), 
-    'description' => 'List all the faqs inside the database as a json response.'
-])
-
-@include('components.api-link', [
-    'method' => 'get', 
-    'url' => route('faqs.paginate'), 
-    'description' => 'List all the faqs inside the database as a json response with the pagination feature.'
-])
-
-@include('components.api-link', [
     'method' => 'post', 
     'url' => route('login'), 
     'description' => 'User login.', 
@@ -41,6 +29,24 @@
         'asset_id' => 'exists:assets,id',
         'remember_me' => 'boolean|required',
     ] 
+])
+
+@include('components.api-link', [
+    'method' => 'get', 
+    'url' => route('faqs.index'), 
+    'description' => 'List all the faqs inside the database as a json response.'
+])
+
+@include('components.api-link', [
+    'method' => 'get', 
+    'url' => route('faqs.paginate'), 
+    'description' => 'List all the faqs inside the database as a json response with the pagination feature.'
+])
+
+@include('components.api-link', [
+    'method' => 'get', 
+    'url' => route('contact-details'), 
+    'description' => 'List all the contact details inside the config file as a json response.'
 ])
 
 @endsection

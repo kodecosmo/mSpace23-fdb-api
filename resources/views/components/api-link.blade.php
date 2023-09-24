@@ -1,5 +1,5 @@
 <!-- API Link -->
-<a class="rounded-sm w-full grid grid-cols-12 bg-white shadow py-4 px-6 gap-2 items-center hover:shadow-lg transition delay-150 duration-300 ease-in-out hover:scale-105 transform" href="{{ $url }}" target="_blank">
+<div class="rounded-sm w-full grid grid-cols-12 bg-white shadow py-4 px-6 gap-2 items-center hover:shadow-lg transition delay-150 duration-300 ease-in-out hover:scale-105 transform" {{--href="{{ $url }}" target="_blank"--}}>
     
     <!-- Method -->
     <div class="col-span-12 md:col-span-1 font-bold text-lg md:text-xl text-green-600">
@@ -29,4 +29,4 @@
     </p>
     </div>
     
-</a>
+</div>
