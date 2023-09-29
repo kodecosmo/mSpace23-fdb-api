@@ -37,12 +37,12 @@ class User extends Authenticatable
 
     public function tokens(): HasMany
     {
-        return $this->hasMany(PersonalAccessTokens::class);
+        return $this->hasMany(PerAccessToken::class);
     }
 
     public function lastToken(): HasMany
     {
-        return $this->hasMany(PersonalAccessTokens::class)->latest();
+        return $this->hasMany(PerAccessToken::class)->latest();
     }
 
     public function gender(): BelongsTo

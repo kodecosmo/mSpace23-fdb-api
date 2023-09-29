@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Asset;
 use App\Models\Gender;
-use App\Models\PersonalAccessTokens;
+use App\Models\PerAccessToken;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -114,7 +114,7 @@ class UserController extends Controller
                 if($remember_me){
 
                     // token authentification should be checked first...
-                    $token = new PersonalAccessTokens;
+                    $token = new PerAccessToken;
                     $token->id = Str::uuid();
                     $token->last_used_at = now();
                     $token->save();
@@ -159,7 +159,7 @@ class UserController extends Controller
         / If the user havent clicked the remember me option do not send the token. It will not generate a token.
         */
         if (isset($token)) {
-            $rememberToken = PersonalAccessTokens::whereId($token);
+            $rememberToken = PerAccessToken::whereId($token);
 
             if ($rememberToken->exists()){
 
@@ -212,7 +212,7 @@ class UserController extends Controller
                     if($remember_me){
 
                         // token authentification should be checked first...
-                        $token = new PersonalAccessTokens;
+                        $token = new PerAccessToken;
                         $token->id = Str::uuid();
                         $token->last_used_at = now();
                         $token->save();
